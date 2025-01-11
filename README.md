@@ -101,7 +101,3 @@ Downlaod & Import `Sagecom-1736606124800.json` and select your promethues dataso
 - Built on [python-sagemcom-api](https://github.com/iMicknl/python-sagemcom-api)
 
 ---
-
-## License
-
-[MIT License](./LICENSE)
