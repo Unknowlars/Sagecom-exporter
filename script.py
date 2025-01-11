@@ -27,7 +27,6 @@ SERVER_PORT = int(os.getenv("SERVER_PORT", "8000"))
 # ------------------------------------------------------------------------------
 # Prometheus Metrics
 # ------------------------------------------------------------------------------
-# Original metrics
 device_uptime_gauge = Gauge('sagemcom_device_uptime_seconds', 'Uptime of the router in seconds')
 device_reboot_count_gauge = Gauge('sagemcom_device_reboot_count', 'Number of times the router has rebooted')
 connected_devices_gauge = Gauge('sagemcom_connected_devices', 'Number of active devices on the network')
@@ -71,7 +70,7 @@ port_mapping_gauge = Gauge(
 )
 
 # ------------------------------------------------------------------------------
-# NEW Wi-Fi metrics (EXAMPLE)
+# Wi-Fi metric kinda works i guess
 # ------------------------------------------------------------------------------
 wifi_radio_signal_gauge = Gauge(
     'sagemcom_wifi_radio_signal_dbm',
@@ -85,7 +84,7 @@ wifi_radio_channel_gauge = Gauge(
 )
 
 # ------------------------------------------------------------------------------
-# Timing controls
+# How often should speed test run, from my test once per hour or IP temp ban
 # ------------------------------------------------------------------------------
 speedtest_interval_seconds = 3600  # Default: run speedtest once per hour
 last_speedtest_time = 0
@@ -93,7 +92,7 @@ last_pull_time = None
 next_pull_time = None
 
 # ------------------------------------------------------------------------------
-# Helper functions
+# Helper functions for getting public IP
 # ------------------------------------------------------------------------------
 async def fetch_public_ip():
     """Fetch public IP using ipify."""
@@ -104,7 +103,9 @@ async def fetch_public_ip():
     except Exception as e:
         print(f"Error fetching public IP: {e}")
         return None
-
+# ------------------------------------------------------------------------------
+# The speedtest runnner
+# ------------------------------------------------------------------------------
 async def run_speedtest():
     """Runs speed test and updates Prometheus metrics."""
     try:
@@ -168,7 +169,7 @@ async def collect_port_mappings(client):
         print(f"Error collecting port mappings: {e}")
 
 # ------------------------------------------------------------------------------
-# NEW: Helper function for Wi-Fi stats (EXAMPLE)
+# Helper function for Wi-Fi stats
 # ------------------------------------------------------------------------------
 async def collect_wifi_stats(client: SagemcomClient):
     """
