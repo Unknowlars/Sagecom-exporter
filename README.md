@@ -55,17 +55,29 @@ services:
 
 ### Building Locally
 
-git clone https://github.com/your-username/sagemcom-exporter.git  
+git clone (https://github.com/Unknowlars/Sagecom-exporter.git) 
+
 cd sagemcom-exporter  
 docker build -t sagemcom-exporter .  
-docker run -p 7000:8000 sagemcom-exporter  
+```
+docker run -d \
+  --name sagecom_prometheus_exporter \
+  -e ROUTER_HOST=192.168.0.1 \
+  -e ROUTER_USERNAME=admin \
+  -e ROUTER_PASSWORD=Password \
+  -e COLLECTION_INTERVAL=300 \
+  -e SERVER_PORT=8000 \
+  -p 7000:8000 \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v /etc/timezone:/etc/timezone:ro \
+  ghcr.io/unknowlars/sagecom-exporter:latest
 
-
+```
 ---
 
 ## Grafana Dashboard
 
-We provide a sample dashboard to help you get started:
+Downlaod & Import `Sagecom-1736606124800.json` and select your promethues datasource
 
 ![Screenshot 1](Sagecom-grafana_1.png)  
 ![Screenshot 2](Sagecom-grafana_2.png)  
