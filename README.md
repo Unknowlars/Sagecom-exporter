@@ -24,7 +24,7 @@ I have also uploaded a Container image to this repo and docker compose file
 version: "3"
 services:
   sagecom_prometheus_exporter:
-    image: sagemcom-exporter
+    image: ghcr.io/unknowlars/sagecom-exporter:latest
     container_name: sagecom_prometheus_exporter
     environment:
       ROUTER_HOST: 192.168.0.1
@@ -37,6 +37,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
 networks: {}
+
 
 
 
