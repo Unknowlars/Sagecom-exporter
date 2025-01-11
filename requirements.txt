@@ -1,0 +1,6 @@
+asyncio
+requests
+speedtest-cli
+ping3
+prometheus-client
+sagemcom-api
