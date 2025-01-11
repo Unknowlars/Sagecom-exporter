@@ -1,31 +1,55 @@
-# Sagecom-exporter
-Promethues exporter for sagecom router based on python-sagemcom-api
+# Sagemcom Exporter
 
-A promethues exporter for sagecom routers usually a ISP router, I wanted to see dhcp lease and conncted clients and other information about my home network and ISP router
+A **Prometheus exporter** for Sagemcom routers (often ISP-provided) to monitor:
 
-The exporter is build using python based on another github project "https://github.com/iMicknl/python-sagemcom-api" 
+- DHCP leases (connected/disconnected clients, MAC address, hostname, status)
+- Router status (software version, build, model, uptime)
+- WiFi channel info
+- Port mapping (port forwarding rules, internal/external ports, protocol, status)
+- Speedtest metrics (download/upload speeds)
+- Ping metrics
 
-Grafana Dashboard : 
+Built on [python-sagemcom-api](https://github.com/iMicknl/python-sagemcom-api).  
+Tested on **Sagemcom Fast 3890v3**, but may work on other models supported by `python-sagemcom-api`.
 
-The exporter collect
-- Router information - Software version, build, model name, Uptime
-- DHCP information - Devices connected or disconnected with Mac address, Hostname, status
-- Wifi channel information
-- Port mapning - Port forward rules, Internal and external port, protocol, status
-- Speedtest information - Download speed and upload speeed
-- Ping
+---
 
+## Quick Start
 
-You can build the container locally if you clone this repo and run "docker build -t sagemcom-exporter ."
+1. **Clone this repository** (or download the `docker-compose.yml`).
+2. **Update environment variables** in `docker-compose.yml`:
+```
+   environment:
+     ROUTER_HOST: 192.168.0.1     # IP or hostname of your Sagemcom router
+     ROUTER_USERNAME: admin       # Admin username
+     ROUTER_PASSWORD: Password    # Admin password
+     COLLECTION_INTERVAL: 300     # Frequency (in seconds) to collect metrics
+     SERVER_PORT: 8000           # Port on which the exporter listens
+```
+3. **Start the exporter**:
+   docker compose up -d
 
-I have also uploaded a Container image to this repo and docker compose file
+4. **Configure Prometheus** to scrape `http://<host>:7000/metrics`.
+5. (Optional) **Import the provided Grafana dashboard** to visualize metrics.
 
+---
+
+## Usage
+
+### Building Locally
+
+git clone https://github.com/your-username/sagemcom-exporter.git  
+cd sagemcom-exporter  
+docker build -t sagemcom-exporter .  
+docker run -p 7000:8000 sagemcom-exporter  
+
+### Docker Compose Example
 ```yaml
 version: "3"
 services:
-  sagecom_prometheus_exporter:
+  sagemcom_prometheus_exporter:
     image: ghcr.io/unknowlars/sagecom-exporter:latest
-    container_name: sagecom_prometheus_exporter
+    container_name: sagemcom_prometheus_exporter
     environment:
       ROUTER_HOST: 192.168.0.1
       ROUTER_USERNAME: admin
@@ -36,9 +60,32 @@ services:
       - 7000:8000
     volumes:
       - /etc/localtime:/etc/localtime:ro
-networks: {}
+```
+---
 
+## Grafana Dashboard
 
+We provide a sample dashboard to help you get started:
 
+![Screenshot 1](Sagecom-grafana_1.png)  
+![Screenshot 2](Sagecom-grafana_2.png)  
+![Screenshot 3](Sagecom-grafana_3.png)
 
-  
+---
+
+## Security Considerations
+
+- Because this exporter connects to your router with admin credentials, ensure that it is not publicly exposed.
+- Restrict access to the exporter’s port or run it behind a secure network.
+
+---
+
+## Credits
+
+- Built on [python-sagemcom-api](https://github.com/iMicknl/python-sagemcom-api)
+
+---
+
+## License
+
+[MIT License](./LICENSE)
