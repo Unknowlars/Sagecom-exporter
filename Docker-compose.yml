@@ -1,0 +1,16 @@
+version: "3"
+services:
+  sagecom_prometheus_exporter:
+    image: sagemcom-exporter
+    container_name: sagecom_prometheus_exporter
+    environment:
+      ROUTER_HOST: 192.168.0.1
+      ROUTER_USERNAME: admin
+      ROUTER_PASSWORD: Password
+      COLLECTION_INTERVAL: 300
+      SERVER_PORT: 8000
+    ports:
+      - 7000:8000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+networks: {}
