@@ -16,8 +16,25 @@ Tested on **Sagemcom Fast 3890v3**, but may work on other models supported by `p
 
 ## Quick Start
 
-1. **Clone this repository** (or download the `docker-compose.yml`).
-2. **Update environment variables** in `docker-compose.yml`:
+1. **Clone this repository** (or use the `docker-compose.yml`).
+```yaml
+version: "3"
+services:
+  sagemcom_prometheus_exporter:
+    image: ghcr.io/unknowlars/sagecom-exporter:latest
+    container_name: sagemcom_prometheus_exporter
+    environment:
+      ROUTER_HOST: 192.168.0.1
+      ROUTER_USERNAME: admin
+      ROUTER_PASSWORD: Password
+      COLLECTION_INTERVAL: 300
+      SERVER_PORT: 8000
+    ports:
+      - 7000:8000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+```
+3. **Update environment variables** in `docker-compose.yml`:
 ```
    environment:
      ROUTER_HOST: 192.168.0.1     # IP or hostname of your Sagemcom router
@@ -43,24 +60,7 @@ cd sagemcom-exporter
 docker build -t sagemcom-exporter .  
 docker run -p 7000:8000 sagemcom-exporter  
 
-### Docker Compose Example
-```yaml
-version: "3"
-services:
-  sagemcom_prometheus_exporter:
-    image: ghcr.io/unknowlars/sagecom-exporter:latest
-    container_name: sagemcom_prometheus_exporter
-    environment:
-      ROUTER_HOST: 192.168.0.1
-      ROUTER_USERNAME: admin
-      ROUTER_PASSWORD: Password
-      COLLECTION_INTERVAL: 300
-      SERVER_PORT: 8000
-    ports:
-      - 7000:8000
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-```
+
 ---
 
 ## Grafana Dashboard
