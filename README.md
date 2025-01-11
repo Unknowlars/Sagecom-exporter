@@ -74,7 +74,7 @@ docker run -d \
   -p 7000:8000 \
   -v /etc/localtime:/etc/localtime:ro \
   -v /etc/timezone:/etc/timezone:ro \
-  ghcr.io/unknowlars/sagecom-exporter:latest
+  sagecom-exporter:latest
 
 ```
 ---
