@@ -15,7 +15,7 @@ import os  # For environment variables
 # ------------------------------------------------------------------------------
 HOST = os.getenv("ROUTER_HOST", "192.168.0.1")
 USERNAME = os.getenv("ROUTER_USERNAME", "admin")
-PASSWORD = os.getenv("ROUTER_PASSWORD", "MTMF2NXC")
+PASSWORD = os.getenv("ROUTER_PASSWORD", "Password")
 ENCRYPTION_METHOD = EncryptionMethod.SHA512
 VALIDATE_SSL_CERT = False
 
