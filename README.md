@@ -54,11 +54,15 @@ services:
 ## Usage
 
 ### Building Locally
-
+```
 git clone (https://github.com/Unknowlars/Sagecom-exporter.git) 
-
-cd sagemcom-exporter  
+```
+```
+cd sagemcom-exporter
+```
+```
 docker build -t sagemcom-exporter .  
+```
 ```
 docker run -d \
   --name sagecom_prometheus_exporter \
